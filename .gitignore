@@ -58,3 +58,4 @@ Temporary Items
 /dist
 /secrets/**
 /resources/**
+jni-ts-template.code-workspace
