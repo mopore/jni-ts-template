@@ -1,1 +1,1 @@
-console.log('Ready...');
+console.log("Hello from the Template.");

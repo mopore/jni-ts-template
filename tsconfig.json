@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "es2020",
     "module": "commonjs",
     "allowJs": true,
     "sourceMap": true,
@@ -9,9 +9,10 @@
     "strictBindCallApply":true,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,  
+    "skipLibCheck": true // This should improve preformance.
   },
   "include": [
-      "./src/**/*"
+    "./src/**/*", "tests/src/jest.config.js", "./tests/src/**/*", "jest.config.js",
   ]
 }
