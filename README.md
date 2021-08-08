@@ -45,3 +45,6 @@ npm install
 
 ## v0.2.0
 - Support for dotenv
+
+## v0.3.0
+- Upgrade of TypeScript to 4.3

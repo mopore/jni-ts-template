@@ -10,7 +10,8 @@
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,  
-    "skipLibCheck": true // This should improve preformance.
+    "skipLibCheck": true, // This should improve preformance.
+    "noImplicitOverride": true
   },
   "include": [
     "./src/**/*", "tests/src/jest.config.js", "./tests/src/**/*", "jest.config.js",
