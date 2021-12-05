@@ -57,6 +57,8 @@ npm install -g npm-check-updates
 
 # Release History
 
+## v0.4.1
+- Template restrictions removed in linting.
 ## v0.4.0
 - NCU guide added to readme.
 - Upgraded to latest versions of TypeScript (4.5.2), Jest (27.4.3) and the rest.

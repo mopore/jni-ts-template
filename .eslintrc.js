@@ -36,5 +36,6 @@ module.exports = {
         "@typescript-eslint/array-type": "warn",
         "@typescript-eslint/interface-name-prefix": "off",
         "@typescript-eslint/consistent-type-assertions": "warn",
+        "@typescript-eslint/restrict-template-expressions": "off",
     }
 }
