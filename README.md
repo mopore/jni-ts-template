@@ -40,14 +40,9 @@ npm install
 ```
 npm install -g npm-check-updates
 ```
-
 2. Use `ncu` to check for available updates in the current project.
-
 3. Run `ncu -u` to update to all latest versions in the package file.
-
 4. Run `npm install` to actually update to the latest versions.
-
-
 
 
 # How to use
@@ -56,6 +51,11 @@ npm install -g npm-check-updates
 ```
 
 # Release History
+
+## v0.5.0
+- Upgrade all components to latest versions.
+- Use 'NodeNext' for module resolution.
+- Replace 'npm' with 'pnpm'.
 
 ## v0.4.1
 - Template restrictions removed in linting.

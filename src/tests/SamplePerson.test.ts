@@ -1,4 +1,4 @@
-import { SamplePerson } from "./SamplePerson";
+import { SamplePerson } from "./SamplePerson.js";
 
 describe("Sample testing with Jest", () => {
   describe("SamplePerson", () => {
