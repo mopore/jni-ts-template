@@ -35,20 +35,14 @@ npm install
 
 
 # Update all packages to the latest version
+`pnpm up --latest` to update all packages to the latest version.
 
-1. Ensure to have 'NPM Check Updates' installed (you might need root priviliges).
-```
-npm install -g npm-check-updates
-```
-2. Use `ncu` to check for available updates in the current project.
-3. Run `ncu -u` to update to all latest versions in the package file.
-4. Run `npm install` to actually update to the latest versions.
+# Add a package to the project
+`pnpm add -Dw <package>` to add a package to the project. The `-D` flag is for development dependencies and the `-w` flag is for workspace.
 
 
 # How to use
-```
-    The code you would write
-```
+Provide an adequate descrioption.
 
 # Release History
 
@@ -56,6 +50,7 @@ npm install -g npm-check-updates
 - Upgrade all components to latest versions.
 - Use 'NodeNext' for module resolution.
 - Replace 'npm' with 'pnpm'.
+- Replace 'jest' with 'mocha'.
 
 ## v0.4.1
 - Template restrictions removed in linting.
