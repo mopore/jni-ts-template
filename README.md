@@ -38,13 +38,16 @@ npm install
 `pnpm up --latest` to update all packages to the latest version.
 
 # Add a package to the project
-`pnpm add -Dw <package>` to add a package to the project. The `-D` flag is for development dependencies and the `-w` flag is for workspace.
+`pnpm add -D <package>` to add a package to the project. The `-D` flag is for development dependencies.
 
 
 # How to use
 Provide an adequate descrioption.
 
 # Release History
+
+## v0.5.1
+- Remove not used workspace configuration.
 
 ## v0.5.0
 - Upgrade all components to latest versions.
