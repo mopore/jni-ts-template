@@ -7,11 +7,16 @@
         {
             "type": "node",
             "request": "launch",
+            // Uncomment the following line if your need an interactive console (w/ input)
+            // "console": "integratedTerminal",
             "name": "Launch Program",
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/App.ts",
+            "args": [
+                "I've been set from .vscode/launch.json!"
+            ],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],
