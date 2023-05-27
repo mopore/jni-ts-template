@@ -71,7 +71,7 @@ Provide an adequate descrioption.
 
 # Release History
 
-## v0.6.0 (Untagged)
+## v0.6.0
 - Add docker image creation (e.g. for an encapsulated CLI rool).
 - Add helpers for reading the version, parsing .env file and user arguments.
 

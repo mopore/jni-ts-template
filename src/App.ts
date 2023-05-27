@@ -1,5 +1,6 @@
 import {checkEnv, processArgs, readVersion} from "./helpers.js";
 
+
 async function main() {
 	const testEnvValue = checkEnv();
 	const userArgument = processArgs();
