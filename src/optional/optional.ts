@@ -1,27 +1,73 @@
-export type None = { _type: 'none' };
-export type Some<T> = { _type: 'some', value: T };
-export type Option<T> = None | Some<T>;
+export abstract class Option<T> {
+	abstract isNone(): this is None<T>;
+	abstract unwrap(): T;
+	abstract unwrapOr(defaultValue: T): T;
+	abstract unwrapExpect(errMessage: string): T;
+}
 
-const none: None = { _type: 'none' };
-const some = <T>(value: T): Some<T> => ({ _type: 'some', value });
+export class None<T> extends Option<T> {
+	_type: 'none' = 'none';
+
+	isNone(): this is None<T> {
+		return true;
+	}
+
+	unwrap(): T {
+		throw new Error("Could not unwrap option");
+	}
+
+	unwrapOr(defaultValue: T): T {
+		return defaultValue;
+	}
+
+	unwrapExpect(_errMessage: string): T {
+		throw new Error("Could not unwrap option");
+	}
+}
+
+export class Some<T> extends Option<T> {
+	_type: 'some' = 'some';
+
+	constructor(public value: T) {
+		super();
+	}
+
+	isNone(): this is None<T> {
+		return false;
+	}
+
+	unwrap(): T {
+		return this.value;
+	}
+
+	unwrapOr(_defaultValue: T): T {
+		return this.value;
+	}
+
+	unwrapExpect(_errMessage: string): T {
+		return this.value;
+	}
+}
+
+export const none = <T>(): None<T> => new None<T>();
+export const some = <T>(value: T): Some<T> => new Some(value);
+
 
 export function optionalCatch<T>(fn: () => T): Option<T> {
 	try {
 		return some(fn());
 	} catch (e) {
-		return none;
+		return none();
 	}
 }
-
 
 export async function optionalResolve<T>(promise: Promise<T>): Promise<Option<T>> {
 	try {
 		return some(await promise);
 	} catch (err) {
-		return none;
+		return none();
 	}
 }
-
 
 function toOptional<I, O extends I>(fn: (input: I) => input is O) {
 	 return function(arg: I): Option<O> {
@@ -29,37 +75,12 @@ function toOptional<I, O extends I>(fn: (input: I) => input is O) {
 			if (fn(arg)) {
 				return some(arg);
 			}
-			return none;
+			return none();
 		} catch (err) {
-			return none;
+			return none();
 		}
 	}
 }
-
-
-export function unwrap<T>(option: Option<T>): T{
-	if (option._type === 'some') {
-		return option.value;
-	}
-	throw new Error("Could not unwrap option")
-}
-
-
-export function unwrapOr<T>(option: Option<T>, defaultValue: T): T {
-	if (option._type === 'some') {
-		return option.value;
-	}
-	return defaultValue;
-}
-
-
-export function unwrapExpect<T>(option: Option<T>, errMessage: string): T {
-	if (option._type === 'some') {
-		return option.value;
-	}
-	throw new Error(errMessage);
-}
-
 
 export const optionalDefined = toOptional(<T>(arg:T | undefined | null): arg is T => arg != null);
 
@@ -71,8 +92,8 @@ function getTimeDiff(arr: Array<Date>): number {
 	const start = optionalDefined(arr[0]);
 	const end = optionalDefined(arr[1]);
 
-	const startVal = unwrapExpect(start, "Start date is not defined").valueOf();
-	const endVal = unwrapOr(end, new Date()).valueOf();
+	const startVal = start.unwrapExpect("Start date is not defined").valueOf();
+	const endVal = end.unwrapOr(new Date()).valueOf();
 
 	return endVal - startVal;
 }
