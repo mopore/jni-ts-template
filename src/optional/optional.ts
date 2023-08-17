@@ -1,5 +1,6 @@
 export abstract class Option<T> {
-	abstract isNone(): this is None<T>;
+	abstract isNone(): boolean;
+	abstract isSome(): boolean;
 	abstract unwrap(): T;
 	abstract unwrapOr(defaultValue: T): T;
 	abstract unwrapExpect(errMessage: string): T;
@@ -12,16 +13,26 @@ export class None<T> extends Option<T> {
 		return true;
 	}
 
+	isSome(): this is Some<T> {
+		return false;
+	}
+
 	unwrap(): T {
-		throw new Error("Could not unwrap option");
+		const errMessageOut = "Unwrap failed option";
+		console.error(errMessageOut);
+		console.trace();
+		throw new Error(errMessageOut);
 	}
 
 	unwrapOr(defaultValue: T): T {
 		return defaultValue;
 	}
 
-	unwrapExpect(_errMessage: string): T {
-		throw new Error("Could not unwrap option");
+	unwrapExpect(errMessage: string): T {
+		const errMessageOut = `Unwrap failed: ${errMessage}`;
+		console.error(errMessageOut);
+		console.trace();
+		throw new Error(errMessageOut);
 	}
 }
 
@@ -36,15 +47,28 @@ export class Some<T> extends Option<T> {
 		return false;
 	}
 
+	isSome(): this is Some<T> {
+		return true;
+	}
+
 	unwrap(): T {
 		return this.value;
 	}
 
 	unwrapOr(_defaultValue: T): T {
+		if (this.isNone()){
+			return _defaultValue;
+		}
 		return this.value;
 	}
 
 	unwrapExpect(_errMessage: string): T {
+		if (this.isNone()){
+			const errMessageOut = `Unwrap failed: ${_errMessage}`;
+			console.error(errMessageOut);
+			console.trace();
+			throw new Error(errMessageOut);
+		}
 		return this.value;
 	}
 }
@@ -70,7 +94,7 @@ export async function optionalResolve<T>(promise: Promise<T>): Promise<Option<T>
 }
 
 function toOptional<I, O extends I>(fn: (input: I) => input is O) {
-	 return function(arg: I): Option<O> {
+	return function(arg: I): Option<O> {
 		try{
 			if (fn(arg)) {
 				return some(arg);
@@ -82,18 +106,18 @@ function toOptional<I, O extends I>(fn: (input: I) => input is O) {
 	}
 }
 
-export const optionalDefined = toOptional(<T>(arg:T | undefined | null): arg is T => arg != null);
+export const optionalDefined = toOptional(<T>(arg: T | undefined | null): arg is T => arg != null);
 
 
-/*
- * Example usage of optional functions
- */
-function getTimeDiff(arr: Array<Date>): number {
-	const start = optionalDefined(arr[0]);
-	const end = optionalDefined(arr[1]);
+// /*
+//  * Example usage of optional functions
+//  */
+// function getTimeDiff(arr: Array<Date>): number {
+// 	const start = optionalDefined(arr[0]);
+// 	const end = optionalDefined(arr[1]);
 
-	const startVal = start.unwrapExpect("Start date is not defined").valueOf();
-	const endVal = end.unwrapOr(new Date()).valueOf();
+// 	const startVal = start.unwrapExpect("Start date is not defined").valueOf();
+// 	const endVal = end.unwrapOr(new Date()).valueOf();
 
-	return endVal - startVal;
-}
+// 	return endVal - startVal;
+// }

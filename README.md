@@ -72,7 +72,8 @@ Provide an adequate descrioption.
 # Release History
 
 ## v0.7.0 (Untagged)
-- Add optional helpers
+- Add optional package with test
+
 
 ## v0.6.0
 - Add docker image creation (e.g. for an encapsulated CLI rool).
