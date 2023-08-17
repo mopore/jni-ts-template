@@ -1,5 +1,4 @@
 {
-
   "name": "jni-ts-template",
   "version": "0.7.0",
   "description": "Template to start with a fresh TypeScript project.",
@@ -14,7 +13,7 @@
     "test": "mocha dist/test/**/*.js --recursive --exit",
     "build": "rm -rf ./dist && tsc -b",
     "start": "node dist/src/App.js",
-    "build-image": "docker buildx build -t jni-ts-template .",  
+    "build-image": "docker buildx build -t jni-ts-template .",
     "run-container": "docker container run --rm jni-ts-template \"I am set in package.json\""
   },
   "keywords": [
@@ -24,19 +23,19 @@
   "author": "jni@mopore.org",
   "license": "ISC",
   "devDependencies": {
-    "@types/chai": "^4.3.4",
+    "@types/chai": "^4.3.5",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^18.11.18",
-    "@types/sinon": "^10.0.13",
-    "@typescript-eslint/eslint-plugin": "^5.50.0",
-    "@typescript-eslint/parser": "^5.50.0",
+    "@types/node": "^20.5.0",
+    "@types/sinon": "^10.0.16",
+    "@typescript-eslint/eslint-plugin": "^6.4.0",
+    "@typescript-eslint/parser": "^6.4.0",
     "chai": "^4.3.7",
-    "eslint": "^8.33.0",
+    "eslint": "^8.47.0",
     "mocha": "^10.2.0",
-    "sinon": "^15.0.1",
-    "typescript": "^4.9.5"
+    "sinon": "^15.2.0",
+    "typescript": "^5.1.6"
   },
   "dependencies": {
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.3.1"
   }
 }

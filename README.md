@@ -72,9 +72,10 @@ Provide an adequate descrioption.
 # Release History
 
 ## v0.7.0 (Untagged)
+- Update packages (TS to 5.1)
+- Update Docker image to use Node 20.
 - Add optional package with test.
 - Remove obsolete greeter code.
-
 
 ## v0.6.0
 - Add docker image creation (e.g. for an encapsulated CLI rool).
