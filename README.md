@@ -72,7 +72,8 @@ Provide an adequate descrioption.
 # Release History
 
 ## v0.7.0 (Untagged)
-- Add optional package with test
+- Add optional package with test.
+- Remove obsolete greeter code.
 
 
 ## v0.6.0
