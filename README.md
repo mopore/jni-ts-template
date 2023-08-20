@@ -70,11 +70,11 @@ TEST_VAR = "Test value"
 
 # Release History
 
-## v0.7.0 (Untagged)
+## v0.7.0
 - Update packages (TS to 5.1)
 - Update Docker image to use Node 20.
 - Add optional package with test.
-- Add tests for diverse useful use cases.
+- Add tests for diverse useful use cases (e.g., using workers w/ multi cores).
 - Remove obsolete greeter code.
 
 ## v0.6.0
