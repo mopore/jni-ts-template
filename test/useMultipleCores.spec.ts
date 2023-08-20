@@ -1,7 +1,9 @@
 import { assert } from "chai";
 import { Worker } from "worker_threads";
 import { JniResult } from "../src/workers/worker.js";
+import os from "os";
 
+const TOTAL_NO_OF_WORK_ITEMS = 10_000_000 as const;
 
 const devideWork = (workInput: number[], numberOfWorkers: number): number[][] => {
 	const workPackages: number[][] = [];
@@ -16,11 +18,11 @@ const devideWork = (workInput: number[], numberOfWorkers: number): number[][] =>
 }
 
 
-const runWorkers = async (): Promise<JniResult[]> => {
-	const numberOfWorkers = 5;
+const runWorkersOnAllCores = async (numberOfWorkers: number): Promise<JniResult[]> => {
+
 	let resultsCounter = 0;
 
-	const oneThousands = Array.from(Array(1000).keys());
+	const oneThousands = Array.from(Array(TOTAL_NO_OF_WORK_ITEMS).keys());
 	const workPackages = devideWork(oneThousands, numberOfWorkers);
 	
 	let jniResults: JniResult[] = []; 
@@ -43,15 +45,20 @@ const runWorkers = async (): Promise<JniResult[]> => {
 	}
 	return jniResults;
 }
-describe("use workers to deploy work over multiple cores", async () => {
 
-	const jniResults = await runWorkers();
+describe("use all cores to run work with workers", () => {
 
-	it("it should use multiple cores", async () => {
-		assert.equal(jniResults.length, 5);
+	// This should corrollate with the number of cores.
+	const noWorkers = os.cpus().length; 
+
+	it("it should use all available cores", async () => {
+		const jniResults = await runWorkersOnAllCores(noWorkers);
+		assert.equal(jniResults.length, noWorkers);
+		let totalNumberOfWorkItems = 0;
 		for (const result of jniResults){
 			assert.equal(result.success, true);
-			assert.equal(result.result.length, 200);
+			totalNumberOfWorkItems += result.result.length;
 		}
+		assert.equal(totalNumberOfWorkItems, TOTAL_NO_OF_WORK_ITEMS);
 	});	
 });
