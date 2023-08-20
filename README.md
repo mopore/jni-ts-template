@@ -65,9 +65,8 @@ TEST_VAR = "Test value"
 # Add a package to the project
 `pnpm add -D <package>` to add a package to the project. The `-D` flag is for development dependencies.
 
-
 # How to use
-Provide an adequate descrioption.
+<< Insert your description here. >>
 
 # Release History
 
@@ -92,6 +91,7 @@ Provide an adequate descrioption.
 
 ## v0.4.1
 - Template restrictions removed in linting.
+
 ## v0.4.0
 - NCU guide added to readme.
 - Upgraded to latest versions of TypeScript (4.5.2), Jest (27.4.3) and the rest.
