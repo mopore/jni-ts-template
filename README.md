@@ -74,6 +74,7 @@ TEST_VAR = "Test value"
 - Update packages (TS to 5.1)
 - Update Docker image to use Node 20.
 - Add optional package with test.
+- Add tests for diverse useful use cases.
 - Remove obsolete greeter code.
 
 ## v0.6.0
