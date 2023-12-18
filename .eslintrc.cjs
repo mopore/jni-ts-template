@@ -27,7 +27,7 @@ module.exports = {
     ],
     "rules": {
         "no-unused-vars": "error",
-        "@typescript-eslint/explicit-member-accessibility": "off",
+        "no-unused-vars": ["error", { "vars": "local", "args": "none", "varsIgnorePattern": "^[A-Z]"}],
         "@typescript-eslint/explicit-function-return-type": "warn",
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/no-explicit-any": "error",
