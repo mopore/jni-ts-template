@@ -11,7 +11,8 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,  
     "skipLibCheck": true, // This should improve preformance.
-    "noImplicitOverride": true
+    "noImplicitOverride": true,
+    "strictNullChecks": true
   },
   "include": [
     "./src/**/*", "./test/**/*", 
