@@ -70,6 +70,11 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v1.0.0
+- TypeScript 5.3
+- All packages updated to latest version.
+- Tougher linting rules.
+
 ## v0.7.0
 - Update packages (TS to 5.1)
 - Update Docker image to use Node 20.

@@ -1,9 +1,17 @@
 export abstract class Option<T> {
 	abstract isNone(): boolean;
 	abstract isSome(): boolean;
-	abstract unwrap(): T;
-	abstract unwrapOr(defaultValue: T): T;
-	abstract unwrapExpect(errMessage: string): T;
+	unwrap(): T {
+		const errMessageOut = "Unwrap failed option";
+		console.error(errMessageOut);
+		console.trace();
+		throw new Error(errMessageOut);
+	}
+
+	unwrapOr(defaultValue: T): T {
+		return defaultValue;
+	}
+
 }
 
 export class None<T> extends Option<T> {
@@ -17,17 +25,6 @@ export class None<T> extends Option<T> {
 		return false;
 	}
 
-	unwrap(): T {
-		const errMessageOut = "Unwrap failed option";
-		console.error(errMessageOut);
-		console.trace();
-		throw new Error(errMessageOut);
-	}
-
-	unwrapOr(defaultValue: T): T {
-		return defaultValue;
-	}
-
 	unwrapExpect(errMessage: string): T {
 		const errMessageOut = `Unwrap failed: ${errMessage}`;
 		console.error(errMessageOut);
@@ -38,9 +35,11 @@ export class None<T> extends Option<T> {
 
 export class Some<T> extends Option<T> {
 	_type: 'some' = 'some';
+	value: T;
 
-	constructor(public value: T) {
+	constructor(value: T) {
 		super();
+		this.value = value;
 	}
 
 	isNone(): this is None<T> {
@@ -51,11 +50,11 @@ export class Some<T> extends Option<T> {
 		return true;
 	}
 
-	unwrap(): T {
+	override unwrap(): T {
 		return this.value;
 	}
 
-	unwrapOr(_defaultValue: T): T {
+	override unwrapOr(_defaultValue: T): T {
 		if (this.isNone()){
 			return _defaultValue;
 		}

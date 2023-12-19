@@ -8,6 +8,8 @@ RUN pnpm install
 COPY .env /app
 COPY src /app/src/
 COPY tsconfig.json /app/
+
+COPY .eslint* /app/
 RUN pnpm build
 
 ENV TZ=UTC

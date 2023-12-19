@@ -34,12 +34,16 @@ export const processArgs = (): string => {
 	}
 }
 
+type PackageInfo = {
+	name: string,
+	version: string,
+}
 
 export const readVersion = (): string => {
 	try{
 		const rawText =	fs.readFileSync("package.json",  "utf8");
-		const packageJson = JSON.parse(rawText);
-		const version = packageJson.version;
+		const packageInfo = JSON.parse(rawText) as PackageInfo;
+		const version = packageInfo.version
 		return version;
 	} catch (error) {
 		const errorMessage = `Could not read version: ${error}`;
