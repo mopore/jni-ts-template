@@ -70,6 +70,11 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v1.1.0
+- Even tougher linting rules.
+- Multi stage docker build with Node 18 (for Rapsberry PI compatibility).
+
+
 ## v1.0.0
 - TypeScript 5.3
 - All packages updated to latest version.
