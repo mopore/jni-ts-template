@@ -1,9 +1,11 @@
+import { log } from "../logger/log.js";
+
 export abstract class Option<T> {
 	abstract isNone(): boolean;
 	abstract isSome(): boolean;
 	unwrap(): T {
 		const errMessageOut = "Unwrap failed option";
-		console.error(errMessageOut);
+		log.error(errMessageOut);
 		console.trace();
 		throw new Error(errMessageOut);
 	}
@@ -27,7 +29,7 @@ export class None<T> extends Option<T> {
 
 	unwrapExpect(errMessage: string): T {
 		const errMessageOut = `Unwrap failed: ${errMessage}`;
-		console.error(errMessageOut);
+		log.error(errMessageOut);
 		console.trace();
 		throw new Error(errMessageOut);
 	}
@@ -64,7 +66,7 @@ export class Some<T> extends Option<T> {
 	unwrapExpect(_errMessage: string): T {
 		if (this.isNone()){
 			const errMessageOut = `Unwrap failed: ${_errMessage}`;
-			console.error(errMessageOut);
+			log.error(errMessageOut);
 			console.trace();
 			throw new Error(errMessageOut);
 		}

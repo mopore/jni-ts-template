@@ -1,8 +1,9 @@
 import { assert } from "chai";
 import { Worker } from "worker_threads";
-import { JniResult } from "../src/workers/worker.js";
+import { JniResult } from "../src/shared/workers/worker.js";
 import os from "os";
 
+const PATH_TO_WORKER_FILE = "./dist/src/shared/workers/worker.js";
 const TOTAL_NO_OF_WORK_ITEMS = 10_000_000 as const;
 
 const devideWork = (workInput: number[], numberOfWorkers: number): number[][] => {
@@ -17,9 +18,7 @@ const devideWork = (workInput: number[], numberOfWorkers: number): number[][] =>
 	return workPackages;
 }
 
-
 const runWorkersOnAllCores = async (numberOfWorkers: number): Promise<JniResult[]> => {
-
 	let resultsCounter = 0;
 
 	const oneThousands = Array.from(Array(TOTAL_NO_OF_WORK_ITEMS).keys());
@@ -27,7 +26,7 @@ const runWorkersOnAllCores = async (numberOfWorkers: number): Promise<JniResult[
 	
 	let jniResults: JniResult[] = []; 
 	workPackages.forEach(workPackage => {
-		const worker = new Worker("./dist/src/workers/worker.js");
+		const worker = new Worker(PATH_TO_WORKER_FILE);
 		worker.postMessage(workPackage);
 		worker.on("message", (result) => {
 			jniResults.push(result);

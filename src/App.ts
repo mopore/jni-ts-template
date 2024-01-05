@@ -1,4 +1,5 @@
-import {checkEnv, processArgs, readVersion} from "./helpers.js";
+import {checkEnv, processArgs, readVersion} from "./shared/helpers.js";
+import { log } from "./shared/logger/log.js";
 
 
 async function main(): Promise<void> {
@@ -6,9 +7,9 @@ async function main(): Promise<void> {
 	const userArgument = processArgs();
 	const version = readVersion();
 
-	console.log(`Hello from the Template! Version: ${version}`);
-	console.log(`Test value from ".env": ${testEnvValue}`);
-	console.log(`Test argument passed: ${userArgument}`);
+	log.info(`Hello from the Template! Version: ${version}`);
+	log.info(`Test value from ".env": ${testEnvValue}`);
+	log.info(`Test argument passed: ${userArgument}`);
 
 	// Fake: You should await your application code here
 	await Promise.resolve();

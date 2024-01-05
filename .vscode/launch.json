@@ -14,9 +14,13 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/App.ts",
+            "console": "integratedTerminal",
             "args": [
                 "I've been set from .vscode/launch.json!"
             ],
+            "env": {
+                "LOG_SETUP":"dev",
+            },
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],

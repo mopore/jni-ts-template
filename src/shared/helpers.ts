@@ -1,5 +1,6 @@
 import dotenv from "dotenv";
 import fs from "fs";
+import { log } from "./logger/log.js";
 
 
 const HELP_MESSAGE = `
@@ -16,7 +17,7 @@ export const checkEnv = (): string => {
 		return testVarValue;
 	} catch (error) {
 		const errorMessage = `INTERNAL ERROR - Could load preferences: ${error}`;
-		console.error(errorMessage);
+		log.error(errorMessage);
 		process.exit(9);
 	}
 }
@@ -29,7 +30,7 @@ export const processArgs = (): string => {
 		return userArgument;
 	}
 	else {
-		console.error(HELP_MESSAGE)
+		log.error(HELP_MESSAGE)
 		process.exit(9);
 	}
 }
@@ -47,7 +48,7 @@ export const readVersion = (): string => {
 		return version;
 	} catch (error) {
 		const errorMessage = `Could not read version: ${error}`;
-		console.error(errorMessage);
+		log.error(errorMessage);
 		console.trace();
 		throw new Error(errorMessage);
 	}

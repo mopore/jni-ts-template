@@ -1,5 +1,5 @@
 import { assert } from "chai";
-import { Option, none, optionalDefined, some } from "../src/optional/optional.js";
+import { Option, none, optionalDefined, some } from "../src/shared/optional/optional.js";
 
 const someWithOptionDefined = (): Option<string> => optionalDefined("some");
 const optionWithSome = (): Option<string> => some("some");

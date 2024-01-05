@@ -1,6 +1,6 @@
 {
   "name": "jni-ts-template",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Template to start with a fresh TypeScript project.",
   "main": "App.ts",
   "type": "module",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "test": "mocha dist/test/**/*.js --recursive --exit",
+    "test": "LOG_SETUP=prod mocha dist/test/**/*.js --recursive --exit",
     "build": "rm -rf ./dist && tsc -b && npx eslint .",
     "start": "node dist/src/App.js",
     "build-image": "docker buildx build -t jni-ts-template .",
@@ -36,6 +36,7 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "winston": "^3.11.0"
   }
 }

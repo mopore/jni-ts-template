@@ -70,6 +70,10 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v1.2.0
+- Merge in enums, sharedFunction, logger.
+- Introduce winston.
+
 ## v1.1.1
 - Updated to latest libraries.
 
