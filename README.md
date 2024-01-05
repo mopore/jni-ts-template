@@ -70,6 +70,10 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v1.2.1
+- Fixing missing env variable in docker image.
+- Add /logs to .gitignore.
+
 ## v1.2.0
 - Merge in enums, sharedFunction, logger.
 - Introduce winston.

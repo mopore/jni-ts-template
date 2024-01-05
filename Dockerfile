@@ -24,4 +24,6 @@ COPY package*.json /app/
 COPY .env /app/
 
 ENV TZ=UTC
+ENV LOG_SETUP=prod
+
 ENTRYPOINT ["node", "dist/App.js"]

@@ -1,6 +1,6 @@
 {
   "name": "jni-ts-template",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Template to start with a fresh TypeScript project.",
   "main": "App.ts",
   "type": "module",
