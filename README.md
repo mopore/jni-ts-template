@@ -70,6 +70,9 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v1.1.1
+- Updated to latest libraries.
+
 ## v1.1.0
 - Even tougher linting rules.
 - Multi stage docker build with Node 18 (for Rapsberry PI compatibility).

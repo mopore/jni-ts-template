@@ -1,6 +1,6 @@
 {
   "name": "jni-ts-template",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Template to start with a fresh TypeScript project.",
   "main": "App.ts",
   "type": "module",
@@ -25,11 +25,11 @@
   "devDependencies": {
     "@types/chai": "^4.3.11",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.10.5",
+    "@types/node": "^20.10.6",
     "@types/sinon": "^17.0.2",
-    "@typescript-eslint/eslint-plugin": "^6.15.0",
-    "@typescript-eslint/parser": "^6.15.0",
-    "chai": "^4.3.10",
+    "@typescript-eslint/eslint-plugin": "^6.17.0",
+    "@typescript-eslint/parser": "^6.17.0",
+    "chai": "^5.0.0",
     "eslint": "^8.56.0",
     "mocha": "^10.2.0",
     "sinon": "^17.0.1",
