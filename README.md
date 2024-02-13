@@ -103,7 +103,7 @@ TEST_VAR = "Test value"
 
 # Release History
 
-## v1.3.
+## v1.2.2 Better documentation and misusage.
 
 ## v1.2.1
 - Fixing missing env variable in docker image.
