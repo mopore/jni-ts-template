@@ -19,7 +19,7 @@
                 "I've been set from .vscode/launch.json!"
             ],
             "env": {
-                "LOG_SETUP":"dev",
+                // "LOG_SETUP":"dev",
             },
             "outFiles": [
                 "${workspaceFolder}/**/*.js"

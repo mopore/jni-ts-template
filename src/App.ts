@@ -8,7 +8,7 @@ async function main(): Promise<void> {
 	const version = readVersion();
 
 	log.info(`Hello from the Template! Version: ${version}`);
-	log.info(`Test value from ".env": ${testEnvValue}`);
+	log.info(`Test value from ".env" file: ${testEnvValue}`);
 	log.info(`Test argument passed: ${userArgument}`);
 
 	// Fake: You should await your application code here

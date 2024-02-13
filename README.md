@@ -24,11 +24,44 @@ To have an easier start for my projects.
 
 # Setup
 
-## Development environment
+## Prerequisites
+You will need "node.js" and "pnpm" installed on your system to use this
+template.
+To install node.js I recommend using nvm (Node Version Manager).
+See https://github.com/nvm-sh/nvm for installation instructions.
+
+### NVM (Node Version Manager)
+Description from `tldr nvm` output:
+
+Install, uninstall or switch between Node.js versions.
+Supports version numbers like "12.8" or "v16.13.1", and labels like "stable", "system", etc.
+See also: `asdf`.
+More information: <https://github.com/creationix/nvm>.
+
+- Install a specific version of Node.js:
+    `nvm install node_version`
+
+- Use a specific version of Node.js in the current shell:
+    `nvm use node_version`
+
+- Set the default Node.js version:
+    `nvm alias default node_version`
+
+- List all available Node.js versions and highlight the default one:
+    `nvm list`
+
+### pnpm
+"pnpm" is my personal choice for a faster alternative to "npm" and "yarn".
+Install pnpm with `npm i -g pnpm`.
+The general usage is the same as with "npm".
+
+## Usage of this project template
 For local development start with `pnpm i` to install all dependencies.
-Use Visual Studio Code compilation command or `pnpm run build` to compile the project.
-Use Visual Studio Code test command or `pnpm run test` to run the tests.
-To simply run the project us the VS launch configuration or `pnpm run start`.
+For Visual Studio Code (VSC) there is a workspace configuration file included.
+There are npm/pnpm scripts availble to run from CLI or VSC.
+- `pnpm run build` to compile the project.
+- `pnpm run test` to run the tests.
+- `pnpm run start "test argument"` to run an example.
 
 Launch configs of VS Code can be found in `.vscode/launch.json`.
 
@@ -69,6 +102,8 @@ TEST_VAR = "Test value"
 << Insert your description here. >>
 
 # Release History
+
+## v1.3.
 
 ## v1.2.1
 - Fixing missing env variable in docker image.

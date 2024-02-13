@@ -1,5 +1,5 @@
 import winston from "winston";
-import { parseEnvVariable } from "../SharedFunctions.js";
+import { parseEnvVariableOr } from "../SharedFunctions.js";
 import { enums } from "../enums/enums.js";
 
 const LOG_SETUP_NAME = "LOG_SETUP" as const;
@@ -13,7 +13,8 @@ const colorizedDevFormat = winston.format.printf(({ level, message, timestamp })
   return `${greyTimestamp} ${level}: ${message}`;
 });
 
-const loglevel = enums.to(LogSetup, parseEnvVariable(LOG_SETUP_NAME));
+const logEnvVariable = parseEnvVariableOr(LOG_SETUP_NAME, LogSetup.DEVELOPMENT); 
+const loglevel = enums.to(LogSetup, logEnvVariable);
 
 let internalLog: winston.Logger;
 
