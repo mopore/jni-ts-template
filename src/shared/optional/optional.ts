@@ -3,20 +3,13 @@ import { log } from "../logger/log.js";
 export abstract class Option<T> {
 	abstract isNone(): boolean;
 	abstract isSome(): boolean;
-	unwrap(): T {
-		const errMessageOut = "Unwrap failed option";
-		log.error(errMessageOut);
-		console.trace();
-		throw new Error(errMessageOut);
-	}
-
-	unwrapOr(defaultValue: T): T {
-		return defaultValue;
-	}
-
+	abstract unwrap(): T;
+	abstract unwrapOr(defaultValue: T): T;
+	abstract unwrapExpect(errMessage: string): T;
 }
 
 export class None<T> extends Option<T> {
+
 	_type = 'none' as const;
 
 	isNone(): this is None<T> {
@@ -27,21 +20,30 @@ export class None<T> extends Option<T> {
 		return false;
 	}
 
+	unwrap(): T {
+		const errMessageOut = "Unwrap failed option";
+		log.error(errMessageOut);
+		log.trace();
+		throw new Error(errMessageOut);
+	}
+
+	unwrapOr(defaultValue: T): T {
+		return defaultValue;
+	}
+
 	unwrapExpect(errMessage: string): T {
 		const errMessageOut = `Unwrap failed: ${errMessage}`;
 		log.error(errMessageOut);
-		console.trace();
+		log.trace();
 		throw new Error(errMessageOut);
 	}
 }
 
 export class Some<T> extends Option<T> {
 	_type = 'some' as const;
-	value: T;
 
-	constructor(value: T) {
+	constructor(public value: T) {
 		super();
-		this.value = value;
 	}
 
 	isNone(): this is None<T> {
@@ -52,11 +54,11 @@ export class Some<T> extends Option<T> {
 		return true;
 	}
 
-	override unwrap(): T {
+	unwrap(): T {
 		return this.value;
 	}
 
-	override unwrapOr(_defaultValue: T): T {
+	unwrapOr(_defaultValue: T): T {
 		if (this.isNone()){
 			return _defaultValue;
 		}
@@ -67,7 +69,7 @@ export class Some<T> extends Option<T> {
 		if (this.isNone()){
 			const errMessageOut = `Unwrap failed: ${_errMessage}`;
 			log.error(errMessageOut);
-			console.trace();
+			log.trace();
 			throw new Error(errMessageOut);
 		}
 		return this.value;
@@ -81,7 +83,7 @@ export const some = <T>(value: T): Some<T> => new Some(value);
 export function optionalCatch<T>(fn: () => T): Option<T> {
 	try {
 		return some(fn());
-	} catch (e) {
+	} catch {
 		return none();
 	}
 }
@@ -89,7 +91,7 @@ export function optionalCatch<T>(fn: () => T): Option<T> {
 export async function optionalResolve<T>(promise: Promise<T>): Promise<Option<T>> {
 	try {
 		return some(await promise);
-	} catch (err) {
+	} catch {
 		return none();
 	}
 }
@@ -101,7 +103,7 @@ function toOptional<I, O extends I>(fn: (input: I) => input is O) {
 				return some(arg);
 			}
 			return none();
-		} catch (err) {
+		} catch {
 			return none();
 		}
 	}

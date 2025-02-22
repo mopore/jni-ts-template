@@ -1,9 +1,9 @@
 import winston from "winston";
-import { parseEnvVariableOr } from "../SharedFunctions.js";
+import { parseEnvVariable } from "../SharedFunctions.js";
 import { enums } from "../enums/enums.js";
 
-const LOG_SETUP_NAME = "LOG_SETUP" as const;
-enum LogSetup {
+export const LOG_SETUP_NAME = "LOG_SETUP";
+export enum LogSetup {
 	PRODUCTION = "prod",
 	DEVELOPMENT = "dev",
 }
@@ -13,14 +13,47 @@ const colorizedDevFormat = winston.format.printf(({ level, message, timestamp })
   return `${greyTimestamp} ${level}: ${message}`;
 });
 
-const logEnvVariable = parseEnvVariableOr(LOG_SETUP_NAME, LogSetup.DEVELOPMENT); 
-const loglevel = enums.to(LogSetup, logEnvVariable);
+const loglevel = enums.to(LogSetup, parseEnvVariable(LOG_SETUP_NAME));
 
-let internalLog: winston.Logger;
+
+export class ExtendedLogger{
+
+	private readonly logger: winston.Logger;
+
+	constructor(options: winston.LoggerOptions) {
+		this.logger = winston.createLogger(options);
+	}
+
+	trace(): void {
+		console.trace();
+	}
+
+	error(message: unknown): void {
+		this.logger.error(message);
+	}
+
+	warn(message: unknown): void {
+		this.logger.warn(message);
+	}
+
+	info(message: unknown): void {
+		this.logger.info(message);
+	}
+
+	debug(message: unknown): void {
+		this.logger.debug(message);
+	}
+}
+
+const createLogger = (options: winston.LoggerOptions): ExtendedLogger => {
+	return new ExtendedLogger(options);
+}
+
+let internalLog: ExtendedLogger;
 
 switch (loglevel) {
 	case LogSetup.PRODUCTION:
-		internalLog = winston.createLogger({
+		internalLog = createLogger({
 			level: "info",
 			format: winston.format.combine(
 				winston.format.timestamp({
@@ -34,7 +67,7 @@ switch (loglevel) {
 		});
 		break;
 	case LogSetup.DEVELOPMENT:
-		internalLog = winston.createLogger({
+		internalLog = createLogger({
 			level: "debug",
 			format: winston.format.combine(
 				winston.format.timestamp({
@@ -61,4 +94,4 @@ switch (loglevel) {
 		throw new Error("Log level not supported");
 }
 
-export const log = internalLog;
+export const log: ExtendedLogger = internalLog;

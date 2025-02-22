@@ -35,7 +35,6 @@ Description from `tldr nvm` output:
 
 Install, uninstall or switch between Node.js versions.
 Supports version numbers like "12.8" or "v16.13.1", and labels like "stable", "system", etc.
-See also: `asdf`.
 More information: <https://github.com/creationix/nvm>.
 
 - Install a specific version of Node.js:
@@ -60,7 +59,8 @@ For local development start with `pnpm i` to install all dependencies.
 For Visual Studio Code (VSC) there is a workspace configuration file included.
 There are npm/pnpm scripts availble to run from CLI or VSC.
 - `pnpm run build` to compile the project.
-- `pnpm run test` to run the tests.
+- `pnpm run test_core` to run core unit tests w/o dependencies.
+- `pnpm run test_all` to run the all tests (including integration).
 - `pnpm run start "test argument"` to run an example.
 
 Launch configs of VS Code can be found in `.vscode/launch.json`.
@@ -70,7 +70,7 @@ To build a docker image use
 ```bash
 docker buildx build -t jni-ts-template . 
 ```
-or run `pnpm run build-image`.
+or run `pnpm run build-docker-image`.
 
 To run a temporary container from the image call: 
 ```bash
@@ -81,7 +81,7 @@ or call `pnpm run run-container`.
 Change the image name (here `jni-ts-template`) to your liking.
 
 ### Optional: Add an alias to run the docker container as an CLI tool
-```bash
+```shell
 alias yourcommand='docker container run --rm jni-ts-template'
 ```
 
@@ -93,7 +93,7 @@ TEST_VAR = "Test value"
 ```
 
 # Update all packages to the latest version
-`pnpm up --latest` to update all packages to the latest version.
+`pnpm update --latest` to update all packages to the latest version.
 
 # Add a package to the project
 `pnpm add -D <package>` to add a package to the project. The `-D` flag is for development dependencies.
@@ -103,7 +103,18 @@ TEST_VAR = "Test value"
 
 # Release History
 
-## v1.2.2 Better documentation and misusage.
+## v2.0.0 from 2025-02-22
+- Update of Typescript settings
+- Update of ES Linting including new config file
+- Update of all libraries to current version
+- Introduction of core unit tests and integration tests
+- Example for integration tests w/ testcontainers and a neo4j DB
+- Docker image build includes core unit tests and only depends on itself
+- Update of shared types and functions
+- Update of the README file
+
+## v1.2.2 
+- Better documentation and misusage.
 
 ## v1.2.1
 - Fixing missing env variable in docker image.
