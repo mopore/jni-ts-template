@@ -103,6 +103,9 @@ TEST_VAR = "Test value"
 
 # Release History
 
+## v2.1.0
+- Integrate Theo's trycatch
+
 ## v2.0.0 from 2025-02-22
 - Update of Typescript settings
 - Update of ES Linting including new config file
