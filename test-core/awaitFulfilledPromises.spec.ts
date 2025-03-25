@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 
 
 const sleepAsync = async (ms: number)  => {
@@ -38,9 +38,9 @@ describe("await fulfilled promises", async () => {
 		result => result.status === promiseResults.FULFILLED
 	);
 
-	it("it should wait for 5 promises and collect 4 successfull results", async () => {
-		assert.equal(results.length, 5);
-		assert.equal(failedResults.length, 1);
-		assert.equal(successfullResults.length, 4);
+	it("should have 5 fulfilled promises 4 successfull and 1 failed.", () => {
+		expect(results).to.have.lengthOf(5);
+		expect(failedResults).to.have.lengthOf(1);
+		expect(successfullResults).to.have.lengthOf(4);
 	});	
 });

@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 
 const sleepAsync = async (ms: number)  => {
 	return new Promise(resolve => setTimeout(resolve, ms))
@@ -11,6 +11,6 @@ describe("async sleep", () => {
 		await sleepAsync(1000);
 		const end = Date.now();
 		const diff = end - start;
-		assert.approximately(diff, 1000, 100);
+		expect(diff).to.be.approximately(1000, 100);
 	});	
 });

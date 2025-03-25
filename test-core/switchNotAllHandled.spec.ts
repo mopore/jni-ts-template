@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 
 const shapeKinds = {
 	Circle: "circle",
@@ -17,10 +17,10 @@ describe("switch with all cases.", () => {
 
 		switch (myCircle.kind) {
 			case shapeKinds.Circle:
-				assert.equal(myCircle.kind, shapeKinds.Circle);
+				expect(myCircle.kind).to.equal(shapeKinds.Circle);
 				break;
 			case shapeKinds.Square:
-				assert.equal(myCircle.kind, shapeKinds.Square);
+				expect(myCircle.kind).to.equal(shapeKinds.Square);
 				break;
 			default:
 				throw new Error("unreachable");

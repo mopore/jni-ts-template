@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 
 
 const PAUSE_MS = 100 as const;
@@ -56,7 +56,7 @@ describe("background service", () => {
 	it("should work for 1000ms and produce an array of 10 numbers", async () => {
 		const service = new BackgroundService([]);
 		await sleepAsync(1100);
-		assert.isFalse(service.isAlive());
-		assert.equal(service.workPackage.length, 10);
+		expect(service.isAlive()).to.be.false;
+		expect(service.workPackage).to.have.lengthOf(10);
 	});	
 });

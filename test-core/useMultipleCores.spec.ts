@@ -1,4 +1,4 @@
-import { assert } from "chai";
+import { expect } from "chai";
 import { Worker } from "worker_threads";
 import { JniResult } from "../src/shared/workers/worker.js";
 import os from "os";
@@ -48,16 +48,16 @@ const runWorkersOnAllCores = async (numberOfWorkers: number): Promise<JniResult[
 describe("use all cores to run work with workers", () => {
 
 	// This should corrollate with the number of cores.
-	const noWorkers = os.cpus().length; 
+	const workersLength = os.cpus().length; 
 
 	it("it should use all available cores", async () => {
-		const jniResults = await runWorkersOnAllCores(noWorkers);
-		assert.equal(jniResults.length, noWorkers);
+		const jniResults = await runWorkersOnAllCores(workersLength);
+		expect(jniResults.length).to.equal(workersLength);
 		let totalNumberOfWorkItems = 0;
 		for (const result of jniResults){
-			assert.equal(result.success, true);
+			expect(result.success).to.be.true;
 			totalNumberOfWorkItems += result.result.length;
 		}
-		assert.equal(totalNumberOfWorkItems, TOTAL_NO_OF_WORK_ITEMS);
+		expect(totalNumberOfWorkItems).to.equal(TOTAL_NO_OF_WORK_ITEMS);
 	});	
 });
