@@ -10,7 +10,7 @@
   },
   "scripts": {
     "test_core": "rm -rf ./dist && tsc -b && npx eslint . && TZ=UTC LOG_SETUP=prod mocha dist/test-core/**/*.js --recursive --exit",
-    "test_all": "rm -rf ./dist && tsc -b && npx eslint . && TZ=UTC LOG_SETUP=prod mocha dist/test-core/**/*.js --recursive --exit && LOG_SETUP=prod mocha --timeout 20000 dist/test-integration/**/*.js --recursive --exit",
+    "test_all": "rm -rf ./dist && tsc -b && npx eslint . && TZ=UTC LOG_SETUP=prod mocha dist/test-core/**/*.js --recursive --exit && TZ=UTC LOG_SETUP=prod mocha --timeout 20000 dist/test-integration/**/*.js --recursive --exit",
     "build": "rm -rf ./dist && tsc -b && npx eslint .",
     "build-docker-image": "docker image build -t jni-ts-template .",
     "start": "LOG_SETUP=dev node dist/src/App.js",
