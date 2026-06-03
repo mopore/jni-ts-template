@@ -1,18 +1,21 @@
-import {checkEnv, processArgs, readVersion} from "./shared/helpers.js";
+import { readCliArgsOption, readExampleDotEnvOption, readVersionOption } from "./shared/helpers.js";
 import { log } from "./shared/logger/log.js";
 
 
-async function main(): Promise<void> {
-	const testEnvValue = checkEnv();
-	const userArgument = processArgs();
-	const version = readVersion();
+const main = (): void => {
+	const version = readVersionOption().unwrapExpect("version defined");
+	log.info(`Hello from TS (Node) Template! Version: ${version}`);
 
-	log.info(`Hello from the Template! Version: ${version}`);
-	log.info(`Test value from ".env" file: ${testEnvValue}`);
-	log.info(`Test argument passed: ${userArgument}`);
+	const testVarValue = readExampleDotEnvOption().unwrapExpect("test var defined");
+	log.info(`Test value from ".env" file: ${testVarValue}`);
 
-	// Fake: You should await your application code here
-	await Promise.resolve();
-}
+	const cliArgs = readCliArgsOption();
+	if (cliArgs.isNone()) {
+		log.info("Define some CLI args to be shown here!");
+		return;
+	}
 
-await main();
+	log.info(`Args from cli: ${cliArgs.unwrapExpect("cli args defined")}`);
+};
+
+main();

@@ -1,0 +1,21 @@
+allowBuilds:
+  # Native deps required by testcontainers (via ssh2 transport).
+  cpu-features: true
+  protobufjs: true
+  ssh2: true
+
+# pnpm settings (pnpm 11 reads configuration from this file).
+#
+# Supply-chain cooldown: refuse to resolve any package version published less
+# than 7 days ago. Mirrors the Bun template's .bunfig.toml minimumReleaseAge.
+#
+# UNIT DIFFERENCE: Bun uses seconds (604800 = 7 days); pnpm uses MINUTES.
+#   7 days = 10080 minutes.
+#
+# pnpm 11 already defaults this to 1440 (1 day); 10080 makes it a full week to
+# match the Bun template. To bypass the wait for a specific urgent security
+# patch, add it under minimumReleaseAgeExclude.
+minimumReleaseAge: 10080
+
+# minimumReleaseAgeExclude:
+#   - "some-package-needing-an-urgent-hotfix"

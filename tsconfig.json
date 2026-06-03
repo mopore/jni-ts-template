@@ -1,21 +1,45 @@
 {
   "compilerOptions": {
-    "target": "es2024",
+    // --- Target / module (Node 26, native ESM) ---
+    "target": "es2025",
     "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
+    // --- Library surface ---
+    // es2025 is stable in TS 6 and fully supported by Node 26 (V8 14.6).
+    // es2025 is cumulative, so it includes es2024 and earlier.
+    // esnext.temporal adds the Temporal global, which Node 26 enables by default
+    // (Temporal types ship only under esnext / esnext.temporal, not es2025).
+    // No DOM lib — this is a Node project.
+    "lib": ["es2025", "esnext.temporal"],
+
+    // --- TS 6 REQUIRES this to be explicit ---
+    // In TS 6 the `types` default changed to [] (was: auto-include every @types/*).
+    // Ambient globals must now be listed:
+    //   - "node"  -> process, Buffer, __dirname, NodeJS namespace, etc.
+    //   - "mocha" -> describe/it/before/after globals used by the test files.
+    // Packages imported explicitly (chai, winston, neo4j-driver, testcontainers,
+    // node: built-ins) resolve via their import statements and do NOT belong here.
+    "types": ["node", "mocha"],
+
+    // --- Emit ---
     "allowJs": false,
     "sourceMap": true,
     "outDir": "dist",
+
+    // --- Strictness (matches the Bun template) ---
     "strict": true,
-    "strictBindCallApply":true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,  
-    "skipLibCheck": true, // This should improve preformance.
     "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "noFallthroughCasesInSwitch": true,
+
+    // --- Modern ESM / future-proofing for TS 7 (tsgo) ---
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    "skipLibCheck": true
   },
-  "include": [
-    "src/**/*", "test-core/**/*", "test-integration/**/*"
-  ]
+  "include": ["src/**/*", "test-core/**/*", "test-integration/**/*"]
 }

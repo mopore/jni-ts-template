@@ -1,4 +1,4 @@
-import winston from "winston";
+import * as winston from "winston";
 import { parseEnvVariable } from "../SharedFunctions.js";
 import { enums } from "../enums/enums.js";
 
@@ -17,7 +17,18 @@ const plainFormat = winston.format.printf(({ level, message, timestamp }) => {
 	return `${timestamp} ${level}: ${message}`;
 });
 
-const loglevel = enums.to(LogSetup, parseEnvVariable(LOG_SETUP_NAME));
+const loglevel = ((): LogSetup => {
+	const logSetupOption = parseEnvVariable(LOG_SETUP_NAME);
+	if (logSetupOption.isNone()) {
+		const errorMessage = 'failed to setup logger. "LOG_SETUP" not properly defined.';
+		console.error(errorMessage);
+		console.trace();
+		throw new Error(errorMessage);
+	}
+	const logSetup = logSetupOption.unwrapExpect("log setup name definied");
+	return enums.to(LogSetup, logSetup);
+})();
+
 
 export class ExtendedLogger {
 	private readonly logger: winston.Logger;

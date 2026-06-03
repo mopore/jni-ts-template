@@ -1,4 +1,4 @@
-import { parentPort  } from "worker_threads";
+import { parentPort } from "node:worker_threads";
 
 export interface JniResult {
 	readonly success: boolean;
