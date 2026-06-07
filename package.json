@@ -18,8 +18,7 @@
     "build": "rm -rf ./dist && tsc -b && eslint .",
     "test": "rm -rf ./dist && tsc -b && eslint . && TZ=UTC LOG_SETUP=prod mocha dist/test-core/**/*.js --recursive --exit",
     "test:integration": "rm -rf ./dist && tsc -b && eslint . && TZ=UTC LOG_SETUP=prod mocha dist/test-core/**/*.js --recursive --exit && TZ=UTC LOG_SETUP=prod mocha --timeout 20000 dist/test-integration/**/*.js --recursive --exit",
-    "start": "LOG_SETUP=dev node --env-file=.env dist/src/App.js",
-    "docker:build-push": "docker buildx build --platform linux/amd64,linux/arm64 -t registry.mopore.org/jni/$(jq -r .name package.json):v$(jq -r .version package.json) -t registry.mopore.org/jni/$(jq -r .name package.json):latest --push ."
+    "start": "LOG_SETUP=dev node --env-file=.env dist/src/App.js"
   },
   "keywords": [
     "template",
@@ -28,18 +27,16 @@
   "author": "jni@mopore.org",
   "license": "ISC",
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@types/chai": "^5.2.3",
     "@types/mocha": "^10.0.10",
     "@types/node": "^25.9.1",
-    "@typescript-eslint/eslint-plugin": "^8.53.0",
-    "@typescript-eslint/parser": "^8.53.0",
-    "chai": "^6.2.1",
-    "eslint": "^9.39.2",
-    "mocha": "^11.7.5",
-    "testcontainers": "^11.9.0",
-    "typescript": "^6.0.0"
+    "chai": "^6.2.2",
+    "eslint": "^10.4.1",
+    "mocha": "^11.7.6",
+    "testcontainers": "^12.0.1",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.60.0"
   },
   "dependencies": {
     "winston": "^3.19.0"

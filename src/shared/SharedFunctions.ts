@@ -5,7 +5,7 @@ export function parseEnvVariable(envName: string): Option<string> {
 	const envRawValue = process.env[envName];
 	let envValue: string | undefined;
 	try {
-		envValue = String(envRawValue ?? "");
+		envValue = envRawValue ?? "";
 		if (envValue.trim().length === 0) {
 			console.error(`Value for environment variable "${envName} is not set.`);
 			return none();

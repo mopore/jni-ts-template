@@ -1,54 +1,35 @@
-// eslint.config.js
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import tseslint from "typescript-eslint";
+import { defineConfig, globalIgnores } from "eslint/config";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+export default defineConfig([
+  globalIgnores([
+    "**/node_modules",
+    "**/dist",
+    "**/coverage",
+    "**/test-core",
+    "**/test-integration",
+    "**/.eslintrc.cjs",
+    "**/eslint.config.js",
+  ]),
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-export default [
   {
-    ignores: [
-      "**/node_modules",
-      "**/dist",
-      "**/coverage",
-      "**/test-core",
-      "**/test-integration",
-      "**/.eslintrc.cjs",
-      "**/eslint.config.js"
+    files: ["**/*.ts"],
+    extends: [
+      js.configs.recommended,
+      tseslint.configs.strictTypeChecked,
     ],
-  },
-
-  ...compat.extends(
-    "eslint:recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
-  ),
-
-  {
     languageOptions: {
-      parser: tsParser,
+      parser: tseslint.parser,
       parserOptions: {
         projectService: {
-          allowDefaultProject: ["*.js"], // fallback for JS files
+          allowDefaultProject: ["*.js"],
         },
       },
     },
-
     plugins: {
-      "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": tseslint.plugin,
     },
-
     rules: {
       "@typescript-eslint/explicit-member-accessibility": "off",
       "@typescript-eslint/explicit-function-return-type": "warn",
@@ -85,9 +66,4 @@ export default [
       "@typescript-eslint/no-unnecessary-condition": "error",
     },
   },
-
-  // Optional: Prettier integration (turn formatting rules into errors)
-  // {
-  //   extends: ["plugin:prettier/recommended"],
-  // },
-];
+]);

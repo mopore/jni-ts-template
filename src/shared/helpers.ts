@@ -24,7 +24,7 @@ export const readExampleDotEnvOption = (): Option<string> => {
 	const testVarRawValue = process.env["TEST_VAR"];
 	let testVarValue: string | undefined;
 	try {
-		testVarValue = String(testVarRawValue ?? "");
+		testVarValue = testVarRawValue ?? "";
 		if (testVarValue.trim().length === 0) {
 			const errorMessage = `Missing 'TEST_VAR' defined in .env file in project's root.`;
 			log.error(errorMessage);
