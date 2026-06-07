@@ -1,5 +1,3 @@
-import { log } from "../logger/log.js";
-
 export abstract class Option<T> {
 	abstract isNone(): boolean;
 	abstract isSome(): boolean;
@@ -22,8 +20,8 @@ export class None<T> extends Option<T> {
 
 	unwrap(): T {
 		const errMessageOut = "Unwrap failed option";
-		log.error(errMessageOut);
-		log.trace();
+		console.error(errMessageOut);
+		console.trace();
 		throw new Error(errMessageOut);
 	}
 
@@ -33,8 +31,8 @@ export class None<T> extends Option<T> {
 
 	unwrapExpect(errMessage: string): T {
 		const errMessageOut = `Unwrap failed: ${errMessage}`;
-		log.error(errMessageOut);
-		log.trace();
+		console.error(errMessageOut);
+		console.trace();
 		throw new Error(errMessageOut);
 	}
 }
@@ -59,17 +57,17 @@ export class Some<T> extends Option<T> {
 	}
 
 	unwrapOr(_defaultValue: T): T {
-		if (this.isNone()){
+		if (this.isNone()) {
 			return _defaultValue;
 		}
 		return this.value;
 	}
 
 	unwrapExpect(_errMessage: string): T {
-		if (this.isNone()){
+		if (this.isNone()) {
 			const errMessageOut = `Unwrap failed, expected: ${_errMessage}`;
-			log.error(errMessageOut);
-			log.trace();
+			console.error(errMessageOut);
+			console.trace();
 			throw new Error(errMessageOut);
 		}
 		return this.value;
@@ -97,8 +95,8 @@ export async function optionalResolve<T>(promise: Promise<T>): Promise<Option<T>
 }
 
 function toOptional<I, O extends I>(fn: (input: I) => input is O) {
-	return function(arg: I): Option<O> {
-		try{
+	return function (arg: I): Option<O> {
+		try {
 			if (fn(arg)) {
 				return some(arg);
 			}
@@ -106,21 +104,7 @@ function toOptional<I, O extends I>(fn: (input: I) => input is O) {
 		} catch {
 			return none();
 		}
-	}
+	};
 }
 
 export const optionalDefined = toOptional(<T>(arg: T | undefined | null): arg is T => arg != null);
-
-
-// /*
-//  * Example usage of optional functions
-//  */
-// function getTimeDiff(arr: Array<Date>): number {
-// 	const start = optionalDefined(arr[0]);
-// 	const end = optionalDefined(arr[1]);
-
-// 	const startVal = start.unwrapExpect("Start date is not defined").valueOf();
-// 	const endVal = end.unwrapOr(new Date()).valueOf();
-
-// 	return endVal - startVal;
-// }

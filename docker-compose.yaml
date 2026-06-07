@@ -1,0 +1,12 @@
+services:
+  jni-ts-template:
+    build: .
+    image: registry.mopore.org/jni/jni-ts-template:latest
+    container_name: jni-ts-template
+    env_file:
+      - .env
+    # restart: unless-stopped
+    environment:
+      - TZ=UTC
+      - LOG_SETUP=prod
+    command: ["test arg value from docker-compose.yaml"]

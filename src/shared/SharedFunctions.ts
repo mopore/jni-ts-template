@@ -1,25 +1,26 @@
 import { log } from "./logger/log.js";
+import { none, optionalDefined, type Option } from "./optional/optional.js";
 
-export function parseEnvVariable(envName: string): string{
+export function parseEnvVariable(envName: string): Option<string> {
 	const envRawValue = process.env[envName];
-	let envValue: string;
+	let envValue: string | undefined;
 	try {
-		envValue = String(envRawValue);
-		if (envValue.trim().length === 0 ){
-			throw new Error( `Value for environment variable "${envName} is not set.`);
+		envValue = envRawValue ?? "";
+		if (envValue.trim().length === 0) {
+			console.error(`Value for environment variable "${envName} is not set.`);
+			return none();
 		}
-		return envValue;
 	}
 	catch {
-		const errorMessage = `Could not parse environment variable for '${envName}'. Please check.`;
-		log.error(errorMessage);
-		log.trace();
-		throw new Error(errorMessage);
+		const errorMessage = `Could not parse environment variable '${envName}'. Please check.`;
+		console.error(errorMessage);
+		return none();
 	}
+	return optionalDefined(envValue);
 }
 
 export const sleepAsync = async (ms: number): Promise<void> => {
-	return new Promise(resolve => setTimeout(resolve, ms))
+	return new Promise(resolve => setTimeout(resolve, ms));
 };
 
 export const managedCallAsync = async <T>(
@@ -27,12 +28,12 @@ export const managedCallAsync = async <T>(
 	retryCount: number,
 	retryDelayMs: number,
 ): Promise<T> => {
-	for (let i = 0; i <= retryCount; i++){
+	for (let i = 0; i <= retryCount; i++) {
 		try {
 			return await func();
 		}
-		catch (err: unknown){
-			log.warn(`Call failed. Retrying in ${retryDelayMs/1000} sec(s). Error: ${err}`);
+		catch (err: unknown) {
+			log.warn(`Call failed. Retrying in ${retryDelayMs / 1000} sec(s). Error: ${err}`);
 			await sleepAsync(retryDelayMs);
 		}
 	}
@@ -40,7 +41,7 @@ export const managedCallAsync = async <T>(
 	log.error(errorMessage);
 	log.trace();
 	throw new Error(errorMessage);
-}
+};
 
 /** Run mapper on items from an AsyncIterable with a hard concurrency cap.
  *  Collects and returns a flattened array of results.
@@ -57,11 +58,11 @@ export async function mapConcurrentAsync<T, U>(
 	const schedule: (item: T) => Promise<void> = async (item: T) => {
 		try {
 			const results = await mapper(item);
-			if (Array.isArray(results)){
+			if (Array.isArray(results)) {
 				out.push(...results);
 			}
 		} catch (e) {
-			if (firstError !== undefined){
+			if (firstError === undefined) {
 				firstError = e;
 			}
 		}

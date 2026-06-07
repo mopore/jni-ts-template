@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { Worker } from "worker_threads";
-import { JniResult } from "../src/shared/workers/worker.js";
+import { Worker } from "node:worker_threads";
+import type { JniResult } from "../src/shared/workers/worker.js";
 import os from "os";
 
 const PATH_TO_WORKER_FILE = "./dist/src/shared/workers/worker.js";

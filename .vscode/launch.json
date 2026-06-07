@@ -21,6 +21,7 @@
             "env": {
                 "LOG_SETUP":"dev",
             },
+            "runtimeArgs": ["--env-file=.env"],
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ],

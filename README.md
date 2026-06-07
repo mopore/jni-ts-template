@@ -15,11 +15,9 @@ Source for ASCII-fonts: https://www.coolgenerator.com/ascii-text-generator
 
 
 # What is this?
-
 This is template for TypeScript project in VS Code with linting.
 
 # What's the motivation?
-
 To have an easier start for my projects.
 
 # Setup
@@ -50,50 +48,77 @@ More information: <https://github.com/creationix/nvm>.
     `nvm list`
 
 ### pnpm
-"pnpm" is my personal choice for a faster alternative to "npm" and "yarn".
-Install pnpm with `npm i -g pnpm`.
-The general usage is the same as with "npm".
+pnpm is pinned to version 11 via the `packageManager` field in `package.json` and is
+self-managed — no Corepack needed (Corepack was removed from Node.js 25+).
+
+Install pnpm once:
+```bash
+brew install pnpm   # macOS
+# or see https://pnpm.io/installation for other platforms
+```
+
+This template requires **Node.js 26+**.
 
 ## Usage of this project template
-For local development start with `pnpm i` to install all dependencies.
+For local development start with `pnpm install` to install all dependencies.
 For Visual Studio Code (VSC) there is a workspace configuration file included.
-There are npm/pnpm scripts availble to run from CLI or VSC.
-- `pnpm run build` to compile the project.
-- `pnpm run test_core` to run core unit tests w/o dependencies.
-- `pnpm run test_all` to run the all tests (including integration).
-- `pnpm run start "test argument"` to run an example.
+Available scripts:
+- `pnpm run build` — compile (type-check + lint + emit to `dist/`).
+- `pnpm run typecheck` — type-check only (`tsc -b`), no emit.
+- `pnpm run lint` — lint only.
+- `pnpm test` — build + core unit tests (no external dependencies).
+- `pnpm run test:integration` — build + core tests + integration tests (requires Docker).
+- `pnpm start` — run the app (loads `.env` via `--env-file`).
+- `pnpm start "test argument"` — run the app with a CLI argument.
 
 Launch configs of VS Code can be found in `.vscode/launch.json`.
 
 ## Docker Setup
-To build a docker image use 
+To build a local image:
 ```bash
-docker buildx build -t jni-ts-template . 
+docker buildx build -t jni-ts-template .
 ```
-or run `pnpm run build-docker-image`.
 
-To run a temporary container from the image call: 
+To run with Docker Compose (uses `docker-compose.yaml` at the repo root):
 ```bash
-docker container run --rm jni-ts-template "test arg value"
+docker compose up --build -d
 ```
-or call `pnpm run run-container`.
 
-Change the image name (here `jni-ts-template`) to your liking.
+CI/CD publishing is handled externally (Forgejo/Woodpecker).
 
-### Optional: Add an alias to run the docker container as an CLI tool
+### Optional: Add an alias to run the docker container as a CLI tool
 ```shell
 alias yourcommand='docker container run --rm jni-ts-template'
 ```
 
-## Setting env variables (optional)
-Place keys and environment variable values inside a .env file in the project's root folder. The `.env` fils is included in `.gitignore`.
+## Setting env variables
+Copy `env.example` to `.env` in the project root and fill in your values:
+```bash
+cp env.example .env
+```
+
+The `.env` file is loaded natively by Node.js via the `--env-file` flag — no `dotenv`
+package is needed. The file is listed in `.gitignore` and will not be committed.
 
 ```
-TEST_VAR = "Test value"
+TEST_VAR="Test value"
 ```
+
+For VSC debugging, ensure your launch configuration includes either
+`"envFile": "${workspaceFolder}/.env"` or `"--env-file=.env"` in `runtimeArgs`.
 
 # Update all packages to the latest version
-`pnpm update --latest` to update all packages to the latest version.
+Run `pnpm update --latest -i` to update all packages interactively.
+
+The `-i` flag presents a checklist of available updates — toggle individual packages
+with space, confirm with enter. This lets you review and select updates rather than
+applying everything at once.
+
+**Note on `minimumReleaseAge`:** `pnpm-workspace.yaml` is configured with a 7-day
+supply-chain cooldown (`minimumReleaseAge: 10080`). Packages published less than 7 days
+ago will be refused during install/lockfile-verification. If a bump is rejected, either
+wait out the cooldown window or add the package name to `minimumReleaseAgeExclude` in
+`pnpm-workspace.yaml` for a one-off bypass.
 
 # Add a package to the project
 `pnpm add -D <package>` to add a package to the project. The `-D` flag is for development dependencies.
@@ -102,6 +127,19 @@ TEST_VAR = "Test value"
 << Insert your description here. >>
 
 # Release History
+
+## v3.0.0
+- Upgraded to Node.js 26+ and TypeScript 6 (`es2025` target, ESM-only via `NodeNext`)
+- pnpm 11, self-managed via the `packageManager` field (Corepack removed in Node 25+)
+- ESLint 9 → 10; migrated to flat config using the unified `typescript-eslint` package
+  with `strictTypeChecked` preset (removed `FlatCompat`, `@eslint/eslintrc`, and the
+  split `@typescript-eslint/eslint-plugin` / `@typescript-eslint/parser` packages)
+- Added `minimumReleaseAge` (7-day) supply-chain cooldown in `pnpm-workspace.yaml`
+- testcontainers 11 → 12
+- Native `--env-file` loading (removed `dotenv` dependency)
+- Added `env.example` as a tracked template for `.env`
+- Removed the neo4j testcontainers integration example (was introduced in v2.0.0)
+- Removed the `docker:build-push` script (CI/CD publishing handled externally)
 
 ## v2.1.0
 - Integrate Theo's trycatch
