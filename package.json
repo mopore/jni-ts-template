@@ -1,6 +1,6 @@
 {
   "name": "jni-ts-template",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Template to start with a fresh TypeScript project (Node 26, TS 6, pnpm).",
   "main": "dist/src/App.js",
   "type": "module",
