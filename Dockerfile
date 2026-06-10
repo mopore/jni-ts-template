@@ -7,7 +7,7 @@ WORKDIR /app
 # Corepack was removed from Node 25+, so install pnpm directly. The exact version
 # matches package.json "packageManager"; pnpm 10+ also self-honors that field
 # (managePackageManagerVersions), so the two stay in sync.
-RUN npm install -g pnpm@11.0.0
+RUN npm install -g pnpm@11.5.3
 
 # Install deps against the frozen lockfile (pnpm-workspace.yaml carries the
 # minimumReleaseAge supply-chain cooldown and must be present at install time)
