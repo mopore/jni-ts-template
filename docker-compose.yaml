@@ -1,7 +1,7 @@
 services:
   jni-ts-template:
     build: .
-    image: registry.mopore.org/jni/jni-ts-template:latest
+    image: forgejo.mopore.org/mopore/jni-ts-template:latest
     container_name: jni-ts-template
     env_file:
       - .env
